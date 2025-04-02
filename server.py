@@ -8,6 +8,7 @@ import logging
 import time
 import torch
 import numpy
+import threading
 
 import torch
 from matplotlib import pyplot as plt
@@ -34,7 +35,10 @@ def load_yolo(): ## load yolo once
     else:
         logging.info("YOLO model already loaded")
 
-
+def capture_person_thread(frame):
+    thread = threading.Thread(target=capture_person, args=(frame, yolo_model))
+    thread.daemon = True
+    thread.start()
 
 def generate_frames():
     global yolo_model
