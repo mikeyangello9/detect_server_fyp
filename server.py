@@ -23,8 +23,8 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 yolo_model = None
 
 def send_alert():
-    socketio.emit('alert', {'message: intruder Alert'})
-    return {"status": "alert sent"}, 200
+    socketio.emit('Alert', {'message': 'intruder Alert'})
+    return {"status": "Alert sent"}, 200
 
 def load_yolo(): ## load yolo once
     """load YOLO model once"""
@@ -56,7 +56,10 @@ def generate_frames():
 
        ## call logging
         rendered_frame = log_detections(yolo_model, frame)
-        capture_person(frame, yolo_model)
+        # capture_person(frame, yolo_model)
+
+        ## Emit to client
+        send_alert()
 
         # Encode the frame as JPEG
         ret, buffer = cv2.imencode('.jpg', rendered_frame)
