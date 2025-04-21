@@ -8,6 +8,7 @@ from flask import Flask, jsonify, Response, request
 from aiortc import RTCPeerConnection, RTCSessionDescription
 import threading
 import queue
+import os
 
 model = torch.hub.load("ultralytics/yolov5", "yolov5s")
 screenshot_queue = queue.Queue()
@@ -25,15 +26,25 @@ def screenshot_worker():
         for *box, conf, cls in detections:
             class_id = int(cls.item())
             label = yolo_model.names[class_id]
-            if label == "person":  # Check for 'person' class
+            if label == "person" or label == "vandalism" or label == "Fighting":  # Check for 'person' class
                 logging.info("Person detected, taking screenshot")
                 rendered_img = np.squeeze(results.render())
                 annotated_img = cv2.cvtColor(rendered_img, cv2.COLOR_RGB2BGR)
 
+                
+                ## write screenshots to folder
+                screenshot_folder = os.path.join("screenshots")
+                os.makedirs(screenshot_folder, exist_ok=True) ## check is the folder exists
+
                 timestamp = int(time.time())
                 filename = f"screenshot_{timestamp}.jpg"
-                cv2.imwrite(filename, annotated_img)
-                logging.info(f"Screenshot saved as {filename}")
+                filepath = os.path.join(screenshot_folder, filename)
+                cv2.imwrite(filepath, annotated_img)
+
+
+                ## create filename with timestamp
+        
+                logging.info(f"Screenshot saved as {filename}, to the folder {filepath}")
 
 
 

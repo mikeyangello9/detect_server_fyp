@@ -8,14 +8,26 @@
 </head>
 <body>
     <!-- <a href="{{ url_for('video_feed') }}" target="_self">STREAM</a> -->
-     
-    <div class="video-container">
-        <img src="{{ url_for('video_feed') }}" alt="Live Video Feed">
+    
+    <div class="info">
+        <div class="date"></div>
     </div>
 
-    <div>
-        <H1>Alert list</H1>
+        <div class="container">
+            <div class="video-container">
+                <img src="{{ url_for('video_feed') }}" alt="Live Video Feed">
+            </div>
+
+    
+
+        <div class="list-container">
+            <H1>ALERT LIST</H1>
+            <ul class="alert-list"></ul>
+        </div>
+        
     </div>
+    
+    
     <script type="module" src="/static/receive_log.js"></script>
 
 </body>

@@ -22,8 +22,8 @@ app = Flask(__name__, static_url_path="/static")
 socketio = SocketIO(app, cors_allowed_origins="*")
 yolo_model = None
 
-def send_alert():
-    socketio.emit('Alert', {'message': 'intruder Alert'})
+def send_alert(class_action):
+    socketio.emit('Alert', {'message': class_action})
     return {"status": "Alert sent"}, 200
 
 def load_yolo(): ## load yolo once
@@ -55,11 +55,12 @@ def generate_frames():
             break
 
        ## call logging
-        rendered_frame = log_detections(yolo_model, frame)
-        # capture_person(frame, yolo_model)
-
+        rendered_frame, detection_message = log_detections(yolo_model, frame)
+        capture_person(frame, yolo_model) ## screenshot classes
+        if detection_message:
+            send_alert(detection_message)
         ## Emit to client
-        send_alert()
+        
 
         # Encode the frame as JPEG
         ret, buffer = cv2.imencode('.jpg', rendered_frame)
