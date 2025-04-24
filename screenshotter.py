@@ -27,7 +27,7 @@ def screenshot_worker():
             class_id = int(cls.item())
             label = yolo_model.names[class_id]
             if label == "person" or label == "vandalism" or label == "Fighting":  # Check for 'person' class
-                logging.info("Person detected, taking screenshot")
+                logging.info(f"{label} detected, taking screenshot")
                 rendered_img = np.squeeze(results.render())
                 annotated_img = cv2.cvtColor(rendered_img, cv2.COLOR_RGB2BGR)
 

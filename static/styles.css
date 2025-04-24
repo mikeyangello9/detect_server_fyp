@@ -25,13 +25,13 @@ h1 {
 
 .video-container {
   flex: 2;
-  border: 2px solid orange;
-  border-radius: 10px;
+  border: 1px solid rgb(123, 255, 0);
+  border-radius: 4px;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%; /* Lock it to the height of the container */
- 
+  width:1200px
 }
 
 .list-container{
@@ -50,7 +50,7 @@ h1 {
 }
 
 .alert-list{
-  background: red;
+  
   list-style: none;
   list-style: none;
   padding: 0;
@@ -64,4 +64,24 @@ h1 {
   border-left: 4px solid red;
   border-radius: 5px;
   font-size: 0.9rem;
+}
+
+.info{
+  display: flex;
+  gap: 10px;
+  padding: 1rem;
+}
+.info > div{
+  background: red;
+  padding: .5rem;
+  border-radius: 5px;
+}
+.live{
+  position: absolute;
+  top: 20%;
+  left: 10%;
+  background-color: red;
+  color: white;
+  padding: .5rem;
+  border-radius: 7px;
 }
